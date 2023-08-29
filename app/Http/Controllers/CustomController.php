@@ -102,7 +102,6 @@ class CustomController extends Controller
             }else{
                 Session::flush();
                 Auth::logout();
-              
                 return Redirect('login')->withError('Invalid role for login');
             }
        }
@@ -123,9 +122,18 @@ class CustomController extends Controller
        return Redirect('login');
     }
     public function seeYourSps($sh_id){
-        if(auth()->id() == $sh_id){
+        if(auth()->id() == $sh_id && auth()->user()->role == $this->user::SalesHead){
 
             $sps = $this->user->where('lead_id', $sh_id)->get();
+            return view('see-sales-persons', compact('sps'));
+        }else{
+            return redirect('dashboard')->withError('Invalid attempt!');
+        }
+    }
+    public function seeYourCusts($sp_id){
+        if(auth()->id() == $sp_id && auth()->user()->role == $this->user::SalesPerson){
+
+            $sps = $this->user->where('lead_id', $sp_id)->get();
             return view('see-sales-persons', compact('sps'));
         }else{
             return redirect('dashboard')->withError('Invalid attempt!');

@@ -5,15 +5,28 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Your Sales Persons') }}</div>
-  
+ @if(auth()->user()->role == 'sales_head')
+    <div class="card-header">{{ __('Your Sales Persons') }}</div>
+@else
+    <div class="card-header">{{ __('Your Customers') }}</div>                  
+@endif
                 <div class="card-body">
-                    @if(count($sps) > 0)
-                        @foreach($sps as $sp)
-                            <span>{{ $sp->name }}</span><br />
-                        @endforeach
+                    @if(auth()->user()->role == 'sales_head')
+                        @if(count($sps) > 0)
+                            @foreach($sps as $sp)
+                                <span>{{ $sp->name }}</span><br />
+                            @endforeach
+                        @else
+                           <span>No sales person you are leading</span>
+                        @endif
                     @else
-                       <span>No sales person you are leading</span>
+                       @if(count($sps) > 0)
+                           @foreach($sps as $sp)
+                               <span>{{ $sp->name }}</span><br />
+                           @endforeach
+                       @else
+                          <span>No customers signup yet</span>
+                       @endif     
                     @endif
                 </div>
             </div>

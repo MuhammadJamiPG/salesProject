@@ -58,19 +58,24 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('assign-sp') }}">Assign Sales Head</a>
-                </li>
                 @auth
                     @if(auth()->user()->role == 'sales_head')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('see-your-sps',auth()->id()) }}">My Sales Persons</a>
                         </li>    
                     @endif
+                    @if(auth()->user()->role == 'sales_person')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('see-your-customers',auth()->id()) }}">My Customers</a>
+                        </li>    
+                    @endif
                 @endauth
                 @guest
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('assign-sp') }}">Assign Sales Head</a>
                     </li>
                 @else
                     <li class="nav-item">

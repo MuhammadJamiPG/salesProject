@@ -14,4 +14,5 @@ Route::controller(CustomController::class)->group(function(){
     Route::get('dashboard', 'dashboard'); 
     Route::get('logout', 'logout')->name('logout');
     Route::get('see-your-sps/{sh_id}','seeYourSps')->name('see-your-sps');
+    Route::get('see-your-customers/{sp_id}','seeYourCusts')->name('see-your-customers');
 });
